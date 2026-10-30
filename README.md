@@ -2,13 +2,13 @@
 
 An NHS England A&E data engineering portfolio project covering the workflow from public CSV publications to PostgreSQL analytics: automated file discovery, downloading, validation and cleaning in Python, a separate staging loader, and a local dimensional warehouse. The dashboard below visualises results calculated from that database.
 
-**Status:** Python ingestion, cleaning and PostgreSQL staging loader implemented. Local warehouse populated; its schema is included. **Power BI report in progress.** Warehouse transformation scripts and scheduled execution are not yet included.
+**Status:** Python ingestion, cleaning and PostgreSQL staging loader implemented. Local warehouse populated; its schema is included. **Power BI report completed.** Warehouse transformation scripts and scheduled execution are not yet included.
 
 ## Dashboard — actual database results
 
 ![NHS A&E dashboard using actual PostgreSQL results](docs/images/nhs-ae-dashboard.png)
 
-Static dashboard image generated from aggregate queries against the local PostgreSQL database; this is not a screenshot or export of the Power BI report. The Power BI implementation is separate and remains in progress.
+Static dashboard image generated from aggregate queries against the local PostgreSQL database; this is not a screenshot or export of the Power BI report. The Power BI report has been completed separately; its report file and screenshots are not included in this repository.
 
 | Metric | April–September 2026 |
 | --- | ---: |
@@ -28,7 +28,7 @@ Attendance totals (14,059,128), over-four-hour totals (3,524,694) and record cou
 2. **Validate and clean:** the same command profiles files, checks required columns and organisation codes, removes summary rows and writes cleaned CSVs.
 3. **Load staging:** a separate Python command combines cleaned data and inserts records into PostgreSQL without duplicating existing keys.
 4. **Model the warehouse:** the existing local database contains date and organisation dimensions and a monthly fact table. Its schema is committed; the population SQL is not yet included.
-5. **Visualise:** the static image above uses database aggregates; the interactive Power BI report is being developed.
+5. **Visualise:** the static image above uses database aggregates; the interactive Power BI report is complete.
 
 **Automation means processing runs automatically once the commands are launched.** There is no unattended schedule or single command covering the complete warehouse/report refresh. The project spans the end-to-end data workflow locally, with the reproducibility limits above.
 
@@ -40,7 +40,7 @@ flowchart LR
     B --> C[pandas validation and cleaning]
     C --> D[PostgreSQL staging]
     D -. Local SQL transformation; script not yet included .-> E[Date and organisation dimensions / monthly fact]
-    E -.-> F[Power BI report in progress]
+    E -.-> F[Completed Power BI report]
 ```
 
 ## Implemented
@@ -55,7 +55,7 @@ flowchart LR
 
 ## Verified local snapshot — 30 October 2026
 
-The existing local database contains **1,147 staging records and 1,147 warehouse fact records**. These are organisation/month records, not patient attendances. The earlier Power BI import check also reported 1,147 records; the report remains in progress. Raw data and Power BI report files are not bundled; the static dashboard and aggregate results are included.
+The existing local database contains **1,147 staging records and 1,147 warehouse fact records**. These are organisation/month records, not patient attendances. The earlier Power BI import check also reported 1,147 records; the report is now complete. Raw data and Power BI report files are not bundled; the static dashboard and aggregate results are included.
 
 An older README recorded 1,150 cleaned rows before the summary-row cleaning update. That figure is superseded by the current database count; equal row counts alone do not establish full data correctness.
 
@@ -118,4 +118,4 @@ Publication discovery depends on link text. Numeric ranges and reporting-period 
 
 Source: [NHS England A&E Attendances and Emergency Admissions 2026–27](https://www.england.nhs.uk/statistics/statistical-work-areas/ae-waiting-times-and-activity/ae-attendances-and-emergency-admissions-2026-27/). Independent portfolio project, not affiliated with NHS England. Consult the publisher's terms before redistributing source data.
 
-Next: capture warehouse transformation SQL, add database integration tests, complete Power BI KPIs and visuals, and implement scheduling. Azure, Databricks and dbt are **not implemented in this project**.
+Next: capture warehouse transformation SQL, add database integration tests, publish Power BI screenshots or a report link, and implement scheduling. Azure, Databricks and dbt are **not implemented in this project**.
