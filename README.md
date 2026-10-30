@@ -1,8 +1,36 @@
 # NHS A&E Data Engineering Pipeline
 
-Python and PostgreSQL portfolio project using NHS England's public monthly A&E activity data. Downloads and validates CSV publications, cleans organisation records with pandas, and loads a PostgreSQL staging table. A local dimensional warehouse supports ongoing Power BI reporting.
+An NHS England A&E data engineering portfolio project covering the workflow from public CSV publications to PostgreSQL analytics: automated file discovery, downloading, validation and cleaning in Python, a separate staging loader, and a local dimensional warehouse. The dashboard below visualises results calculated from that database.
 
 **Status:** Python ingestion, cleaning and PostgreSQL staging loader implemented. Local warehouse populated; its schema is included. **Power BI report in progress.** Warehouse transformation scripts and scheduled execution are not yet included.
+
+## Dashboard — actual database results
+
+![NHS A&E dashboard using actual PostgreSQL results](docs/images/nhs-ae-dashboard.png)
+
+Static dashboard image generated from aggregate queries against the local PostgreSQL database; this is not a screenshot or export of the Power BI report. The Power BI implementation is separate and remains in progress.
+
+| Metric | April–September 2026 |
+| --- | ---: |
+| Total A&E attendances | 14,059,128 |
+| Type 1 attendances | 8,704,374 |
+| Attendances within four hours | 74.93% |
+| Emergency admissions, including other emergency admissions | 3,195,547 |
+| Organisation-month records | 1,147 |
+
+Attendance totals sum Type 1, Type 2 and Other A&E columns, excluding separately reported booked appointments. Within-four-hour percentage is `100 × (total attendances − attendances over four hours) / total attendances`, calculated from summed counts, not averaged percentages. Emergency admissions include admissions via A&E plus other emergency admissions.
+
+Attendance totals (14,059,128), over-four-hour totals (3,524,694) and record counts matched staging and warehouse on 30 October 2026. No `TOTAL` organisation rows or null attendance/waiting fields were found in staging. These checks establish consistency of the local snapshot, not independent validation of the publisher's data. See [saved aggregate results](docs/dashboard-results.json) and [read-only SQL](sql/dashboard_metrics.sql).
+
+## Automation and end-to-end workflow
+
+1. **Discover and download:** Python finds monthly NHS CSV links, retries transient failures and skips files already downloaded.
+2. **Validate and clean:** the same command profiles files, checks required columns and organisation codes, removes summary rows and writes cleaned CSVs.
+3. **Load staging:** a separate Python command combines cleaned data and inserts records into PostgreSQL without duplicating existing keys.
+4. **Model the warehouse:** the existing local database contains date and organisation dimensions and a monthly fact table. Its schema is committed; the population SQL is not yet included.
+5. **Visualise:** the static image above uses database aggregates; the interactive Power BI report is being developed.
+
+**Automation means processing runs automatically once the commands are launched.** There is no unattended schedule or single command covering the complete warehouse/report refresh. The project spans the end-to-end data workflow locally, with the reproducibility limits above.
 
 ## Architecture
 
@@ -27,7 +55,7 @@ flowchart LR
 
 ## Verified local snapshot — 30 October 2026
 
-The existing local database contains **1,147 staging records and 1,147 warehouse fact records**. These are organisation/month records, not patient attendances. The earlier Power BI import check also reported 1,147 records; the report remains in progress. Data and report files are not bundled.
+The existing local database contains **1,147 staging records and 1,147 warehouse fact records**. These are organisation/month records, not patient attendances. The earlier Power BI import check also reported 1,147 records; the report remains in progress. Raw data and Power BI report files are not bundled; the static dashboard and aggregate results are included.
 
 An older README recorded 1,150 cleaned rows before the summary-row cleaning update. That figure is superseded by the current database count; equal row counts alone do not establish full data correctness.
 
@@ -75,7 +103,7 @@ src/ingestion/load_postgres.py   Validated staging load
 src/utlis/                      Logging and exceptions
 sql/schema.sql                  Staging and dimensional warehouse DDL
 sql/validate.sql                Read-only record-count checks
- tests/                         Synthetic and mocked tests
+tests/                         Synthetic and mocked tests
 ```
 
 The original `utlis` spelling is retained for compatibility. Runtime data and log directories are created automatically and excluded from Git.

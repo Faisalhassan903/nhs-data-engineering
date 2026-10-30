@@ -1,0 +1,90 @@
+{
+  "source": "Local nhs_ae PostgreSQL staging; attendance and over-four-hour totals matched warehouse on 30 October 2026",
+  "scope": "April\u2013September 2026; excludes separately reported booked-appointment columns",
+  "totals": {
+    "records": 1147,
+    "type1": 8704374,
+    "type2": 323341,
+    "other": 5031413,
+    "over4": 3524694,
+    "admissions_via_ae": 2394807,
+    "other_admissions": 800740,
+    "total_attendances": 14059128,
+    "within4_percent": 74.92949776116983,
+    "emergency_admissions_total": 3195547
+  },
+  "monthly": [
+    {
+      "period": "MSitAE-APRIL-2026",
+      "records": 190,
+      "type1": 1404743,
+      "type2": 52203,
+      "other": 814606,
+      "over4": 534592,
+      "admissions_via_ae": 392805,
+      "other_admissions": 132855,
+      "attendances": 2271552,
+      "admissions_total": 525660
+    },
+    {
+      "period": "MSitAE-MAY-2026",
+      "records": 192,
+      "type1": 1466119,
+      "type2": 52381,
+      "other": 860272,
+      "over4": 589840,
+      "admissions_via_ae": 401833,
+      "other_admissions": 131447,
+      "attendances": 2378772,
+      "admissions_total": 533280
+    },
+    {
+      "period": "MSitAE-JUNE-2026",
+      "records": 192,
+      "type1": 1461113,
+      "type2": 54348,
+      "other": 846810,
+      "over4": 600784,
+      "admissions_via_ae": 397954,
+      "other_admissions": 136799,
+      "attendances": 2362271,
+      "admissions_total": 534753
+    },
+    {
+      "period": "MSitAE-JULY-2026",
+      "records": 191,
+      "type1": 1489424,
+      "type2": 56912,
+      "other": 865079,
+      "over4": 604766,
+      "admissions_via_ae": 408030,
+      "other_admissions": 139798,
+      "attendances": 2411415,
+      "admissions_total": 547828
+    },
+    {
+      "period": "MSitAE-AUGUST-2026",
+      "records": 191,
+      "type1": 1407535,
+      "type2": 52483,
+      "other": 805309,
+      "over4": 576553,
+      "admissions_via_ae": 392869,
+      "other_admissions": 124999,
+      "attendances": 2265327,
+      "admissions_total": 517868
+    },
+    {
+      "period": "MSitAE-SEPTEMBER-2026",
+      "records": 191,
+      "type1": 1475440,
+      "type2": 55014,
+      "other": 839337,
+      "over4": 618159,
+      "admissions_via_ae": 401316,
+      "other_admissions": 134842,
+      "attendances": 2369791,
+      "admissions_total": 536158
+    }
+  ]
+}
