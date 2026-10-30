@@ -1,0 +1,42 @@
+# Python environments and generated files
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Tests and coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Local credentials and configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Downloaded data, generated outputs and logs
+/data/raw/
+/data/processed/
+/logs/
+*.part
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Database backups and local reports
+*.dump
+*.backup
+*.pbix
+*.pbit
+.pgpass
